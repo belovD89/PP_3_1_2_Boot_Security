@@ -1,32 +1,56 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table
-public class User {
+@Table(name = "users")
+public class User implements UserDetails, Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-    @Column
+
+    @Column(name = "first_name")
     private String name;
-    @Column
+
+    @Column(name = "last_name")
     private String surname;
-    @Column
-    private int age;
-    @Column
-    private int telefon;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "email")
+    private String email;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    @Fetch(FetchMode.JOIN)
+    private Set<Role> roles;
+
 
     public User() {
     }
 
-    public User(long id, String name, String surname, int age, int telefon) {
-        this.id = id;
+    public User(String name, String surname, String password, String email, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
-        this.age = age;
-        this.telefon = telefon;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
     }
+
 
     public long getId() {
         return id;
@@ -52,20 +76,59 @@ public class User {
         this.surname = surname;
     }
 
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getTelefon() {
-        return telefon;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setTelefon(int telefon) {
-        this.telefon = telefon;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
@@ -74,8 +137,22 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", age=" + age +
-                ", telefon=" + telefon +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, password, email, roles);
     }
 }
