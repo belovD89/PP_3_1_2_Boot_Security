@@ -40,6 +40,22 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUser(long id) {
         return entityManager.find(User.class, id);
-
     }
+
+    @Override
+    public void add(User user) {
+        entityManager.persist(user);
+    }
+
+    @Override
+    public void update(User user) {
+        entityManager.persist(entityManager.merge(user));
+    }
+
+    @Override
+    public User findUserByName(String userName) {
+        return entityManager.createQuery("Select u from User u left join fetch u.roles where u.name =:username", User.class)
+                .setParameter("username", userName).getSingleResult();
+    }
+
 }

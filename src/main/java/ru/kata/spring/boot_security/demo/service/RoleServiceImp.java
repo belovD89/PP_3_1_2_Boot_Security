@@ -21,7 +21,6 @@ public class RoleServiceImp implements RoleService {
         return roleDao.getAllRolles();
     }
 
-
     @Override
     @Transactional
     public void addRole(Role role) {

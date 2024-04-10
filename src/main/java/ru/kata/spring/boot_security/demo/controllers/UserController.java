@@ -1,62 +1,30 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.security.Principal;
 
 
 @Controller
+@RequestMapping("user")
 public class UserController {
+    private final UserService userService;
+    private final RoleService roleService;
 
-//    @Autowired
-    private UserService userService;
-    @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
-
-    //Отображение пользователей
-    @GetMapping("/")
-    public String getAllUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "main-page";
+    @GetMapping("")
+    public String showUser(Model model, Principal principal) {
+        model.addAttribute("user", userService.findUserByName(principal.getName()));
+        return "user/user-info";
     }
 
-    //Добавление пользователя
-    @GetMapping("/add-user")
-    public String addUser(Model model) {
-        User user = new User();
-        model.addAttribute("newUser", user);
-        return "user-info";
-    }
-
-    //Добавление пользователя
-    @PostMapping()
-    public String createUser(@ModelAttribute("newUser") User user) {
-        userService.saveUser(user);
-        return "redirect:/";
-    }
-
-    //Удаление пользователя
-    @RequestMapping("/user-delete/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.deleteUser(id);
-        return "redirect:/";
-    }
-
-    //Обновление данных пользователя
-    @RequestMapping("/update-info/{id}")
-    public String updateUser(Model model, @PathVariable("id") long id) {
-        User currentUser = userService.getUser(id);
-        model.addAttribute("newUser", currentUser);
-        return "user-info";
-    }
 }
