@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>ДОБАВЛЕНИЕ_ПОЛЬЗОВАТЕЛЯ</title>
+</head>
+<body>
+<h1>ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ</h1>
+<table border="5">
+
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Почта</th>
+        <th>Пароль</th>
+        <th>Изменения</th>
+    <tr>
+        <td><input name="name" type="text"></td>
+        <td><input name="lastName" type="text"></td>
+        <td><input name="email" type="email"></td>
+        <td><input name="password" type="password"></td>
+        <td><a class="btn" href="@{/user-delete/{id}(id = ${user.getId()})}">Сохранить</a>
+    </tr>

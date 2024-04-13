@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваши личные данные</title>
+</head>
+<body>
+
+<p th:text="${user.getName()}">Ваше Имя</p>
+<p th:text="${user.getEmail()}">Ваша Почта</p>
+<p th:text="${user.getRoles()}">Ваши полномочия(право доступа)</p>
+
+
+<form action="/logout">
+    <button type="submit">Покинуть страницу</button>
+</form>
+
+</body>
+</html>

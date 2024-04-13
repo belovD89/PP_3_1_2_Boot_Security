@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Page main</title>
+    <title>ГЛАВНАЯ_СТРАНИЦА</title>
 </head>
 <body>
 <h1>СПИСОК ПОЛЬЗОВАТЕЛЕЙ</h1>
@@ -12,6 +12,7 @@
         <th>Фамилия</th>
         <th>Почта</th>
         <th>Пароль</th>
+        <th>Изменения</th>
     </tr>
     <tr th:each="user : ${users}"
         class="row" th:classappend="${user.toString()} ? 'odd-row' : 'even-row'">
@@ -20,12 +21,13 @@
         <td th:utext="${user.getSurname()}">Surname</td>
         <td th:utext="${user.getEmail()}">email</td>
         <td th:utext="${user.getPassword()}">Password</td>
-        <td><a class="btn" th:href="@{/user-delete/{id}(id = ${user.getId()})}">Удалить</a>
-            <a class="btn" th:href="@{/update-info/{id}(id = ${user.getId()})}">Редактировать</a>
+        <td><a class="btn" href="@{/user-delete/{id}(id = ${user.getId()})}">Удалить</a>
+            <a class="btn" href="@{/update-info/{id}(id = ${user.getId()})}">Редактировать</a>
+        </td>
     </tr>
 </table>
 <br>
-<a href="/add-user" class="btn">Добавить пользователя</a>
+<a class="btn" href="/admin/add-user">Добавить пользователя</a>
 
 </body>
 </html>
