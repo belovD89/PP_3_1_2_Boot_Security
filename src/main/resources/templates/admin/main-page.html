@@ -21,7 +21,7 @@
         <td th:utext="${user.getSurname()}">Surname</td>
         <td th:utext="${user.getEmail()}">email</td>
         <td th:utext="${user.getPassword()}">Password</td>
-        <td><a class="btn" href="@{/user-delete/{id}(id = ${user.getId()})}">Удалить</a>
+        <td><a class="btn" href="@{/admin/main-page/{id}(id = ${user.getId()})}">Удалить</a>
             <a class="btn" href="@{/update-info/{id}(id = ${user.getId()})}">Редактировать</a>
         </td>
     </tr>

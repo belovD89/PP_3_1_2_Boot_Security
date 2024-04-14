@@ -6,18 +6,39 @@
 </head>
 <body>
 <h1>ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ</h1>
-<table border="5">
-
-    <tr>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Почта</th>
-        <th>Пароль</th>
-        <th>Изменения</th>
-    <tr>
-        <td><input name="name" type="text"></td>
-        <td><input name="lastName" type="text"></td>
-        <td><input name="email" type="email"></td>
-        <td><input name="password" type="password"></td>
-        <td><a class="btn" href="@{/user-delete/{id}(id = ${user.getId()})}">Сохранить</a>
-    </tr>
+<form action="/add-user" method="post">
+    <table border="5">
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Почта</th>
+            <th>Пароль</th>
+            <th>Право доступа</th>
+            <th>НАЖМИТЕ СОХРАНИТЬ</th>
+        </tr>
+        <tr>
+            <td><input name="name" type="text"></td>
+            <td><input name="lastName" type="text"></td>
+            <td><input name="email" type="email"></td>
+            <td><input name="password" type="password"></td>
+            <td>
+                <label>Roles:
+                    <input name="authorities" th:each="role : ${roles}"
+                           th:text="${role.name}"
+                           th:value="${role.id}"
+                           type="checkbox"
+                    />
+                </label>
+            </td>
+            <td>
+                <button class="btn" type="submit">Сохранить</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<br/><br/>
+<form action="/logout">
+    <button type="submit">ВЫХОД</button>
+</form>
+</body>
+</html>

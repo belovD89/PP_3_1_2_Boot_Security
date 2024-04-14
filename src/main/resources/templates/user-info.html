@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Ваши личные данные</title>
 </head>
 <body>
+<h1>ВАШИ ЛИЧНЫЕ ДАННЫЕ</h1>
 
-<p th:text="${user.getName()}">Ваше Имя</p>
-<p th:text="${user.getEmail()}">Ваша Почта</p>
-<p th:text="${user.getRoles()}">Ваши полномочия(право доступа)</p>
+<table border="1">
+    <tr>
+        <th>Имя</th>
+        <td th:text="${user.getName()}"></td>
+    </tr>
+    <tr>
+        <th>Почта</th>
+        <td th:text="${user.getEmail()}"></td>
+    </tr>
+    <tr>
+        <th>Право доступа</th>
+        <td th:text="${user.getRoles()}"></td>
+    </tr>
+</table>
 
+<br/>
 
 <form action="/logout">
     <button type="submit">Покинуть страницу</button>

@@ -1,13 +1,11 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.context.annotation.Role;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -36,6 +34,28 @@ public class AdminController {
         model.addAttribute("roles", role);
         return "admin/main-page";
     }
+
+    @GetMapping("/add-user")
+    public String newUser(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAllRolles());
+        return "admin/add-user";
+    }
+
+    @PostMapping("")
+    public String createUser(User user) {
+        userService.saveUser(user);
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return "redirect:/admin";
+    }
+
+
+
 
 
 //    //    @Autowired
