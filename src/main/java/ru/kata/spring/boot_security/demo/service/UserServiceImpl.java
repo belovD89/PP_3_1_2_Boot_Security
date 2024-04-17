@@ -75,12 +75,31 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(Long id, User user) {
         var userExist = userDAO.getUser(id);
-        if (!user.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else {
-            user.setPassword(userExist.getPassword());
+        if (userExist == null) {
+            throw new IllegalArgumentException("Пользователь с таким id " + id + " не найден");
         }
+
+        boolean passwordChanged = !user.getPassword().isEmpty();
+        if (passwordChanged) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         userDAO.update(user);
     }
+
+
+//    @Override
+//    @Transactional
+//    public void update(Long id, User user) {
+//        var userExist = userDAO.getUser(id);
+//        if (!user.getPassword().isEmpty()) {
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        } else {
+//            user.setPassword(userExist.getPassword());
+//        }
+//        userDAO.update(user);
+//    }
+
+
 }
 
