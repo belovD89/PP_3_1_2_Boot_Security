@@ -56,8 +56,12 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>5.6.1</version>
 		</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

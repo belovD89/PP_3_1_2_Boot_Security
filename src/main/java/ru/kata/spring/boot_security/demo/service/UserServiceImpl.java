@@ -1,8 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
-//import com.example.SpringBoot1.dao.UserDAO;
-//import com.example.SpringBoot1.model.User;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
@@ -22,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private final RoleDao roleDao;
 
 
-    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder, RoleDao roleDao) {
+    public UserServiceImpl(UserDAO userDAO, @Lazy PasswordEncoder passwordEncoder, RoleDao roleDao) {
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
         this.roleDao = roleDao;

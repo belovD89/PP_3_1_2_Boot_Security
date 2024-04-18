@@ -12,4 +12,6 @@ public interface RoleDao {
 
     void saveRole(Role role);
 
+    Role getByName(String name);
+
 }

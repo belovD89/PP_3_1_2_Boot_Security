@@ -23,6 +23,12 @@ public class RoleDaoImp implements RoleDao {
     }
 
     @Override
+    public Role getByName(String name) {
+        return (Role) entityManager.createQuery("from Role where name = :name")
+                .setParameter("name", name).getSingleResult();
+    }
+
+    @Override
     public void saveRole(Role role) {
         entityManager.persist(role);
     }
