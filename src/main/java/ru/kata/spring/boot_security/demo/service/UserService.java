@@ -12,7 +12,7 @@ public interface UserService {
 
     User getUserId(long id);
 
-    void addUser(List<Role> role, String name, String lastName, String password, String email);
+    void addUser(Role role, String name, String lastName, String password, String email);
 
     User findUserByName(String userName);
 

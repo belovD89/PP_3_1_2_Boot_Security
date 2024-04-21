@@ -1,14 +1,12 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,25 +29,32 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Fetch(FetchMode.JOIN)
-    private Set<Role> roles;
+    @ManyToOne
+    @JoinColumn(
+            name = "role_id",
+            nullable = false
+    )
+    private Role role;
+
+//    @ManyToMany(cascade = CascadeType.MERGE)
+//    @JoinTable(name = "users_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    @Fetch(FetchMode.JOIN)
+// private Set<Role> roles;
 
 
     public User() {
     }
 
-    public User(String name, String surname, String password, String email, Set<Role> roles) {
+    public User(long id, String name, String surname, String password, String email, Role role) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
     }
-
 
     public long getId() {
         return id;
@@ -83,17 +88,17 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return List.of(getRole());
     }
 
     @Override
@@ -138,7 +143,7 @@ public class User implements UserDetails {
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + roles +
+                ", roles=" + role +
                 '}';
     }
 
@@ -147,11 +152,11 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, password, email, roles);
+        return Objects.hash(id, name, surname, password, email, role);
     }
 }

@@ -10,7 +10,6 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -53,13 +52,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void addUser(List<Role> role, String name, String surname, String password, String email) {
+    public void addUser(Role role, String name, String surname, String password, String email) {
         User user = new User();
         user.setName(name);
         user.setSurname(surname);
         user.setPassword(password);
         user.setEmail(email);
-        user.setRoles(new HashSet<>(role));
+        user.setRole(role);
 
         userDAO.save(user);
     }
