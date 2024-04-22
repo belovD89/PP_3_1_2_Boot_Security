@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.dao;
+package ru.kata.spring.boot_security.demo.dao.impl;
 
 //import com.example.SpringBoot1.model.User;
 //import jakarta.persistence.EntityManager;
@@ -6,6 +6,7 @@ package ru.kata.spring.boot_security.demo.dao;
 //import jakarta.persistence.Query;
 
 import org.springframework.stereotype.Repository;
+import ru.kata.spring.boot_security.demo.dao.UserDAO;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;

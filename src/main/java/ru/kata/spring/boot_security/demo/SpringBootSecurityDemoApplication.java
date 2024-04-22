@@ -37,13 +37,15 @@ public class SpringBootSecurityDemoApplication {
 
             User user = new User();
             user.setName("user");
-            user.setEmail("user@mail.ru");
-            user.setPassword("passwordUser");
+            user.setSurname("surName1");
+            user.setEmail("user1@mail.ru");
+            user.setPassword("password1User");
             user.setRole(userRole);
             userService.saveUser(user);
 
             User user1 = new User();
             user1.setName("admin");
+            user1.setSurname("adminSurname");
             user1.setEmail("admin@mail.ru");
             user1.setPassword("passwordAdmin");
             user1.setRole(adminRole);

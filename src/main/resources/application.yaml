@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootdemo?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
+    username: root
+    password: 6Tujkhds4!hd655
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  main:
+    allow-circular-references: true
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  view:
+    prefix: /WEB-INF/jsp/
+    suffix: .jsp
