@@ -55,7 +55,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUserByName(String userName) {
-        return entityManager.createQuery("Select u from User u left join fetch u.roles where u.name =:username", User.class)
+        return entityManager.createQuery("Select u from User u left join fetch u.role where u.name =:username", User.class)
                 .setParameter("username", userName).getSingleResult();
     }
 
