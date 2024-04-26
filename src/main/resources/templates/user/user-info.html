@@ -13,6 +13,10 @@
         <td th:text="${user.getName()}"></td>
     </tr>
     <tr>
+        <th>Фамилия</th>
+        <td th:text="${user.getSurname()}"></td>
+    </tr>
+    <tr>
         <th>Почта</th>
         <td th:text="${user.getEmail()}"></td>
     </tr>
@@ -20,7 +24,6 @@
         <th>Право доступа</th>
         <td th:text="${user.getRoles()}"></td>
     </tr>
-    </form>
 </table>
 <br><br/>
 <input type="submit" value="Подтвердить!"/>
