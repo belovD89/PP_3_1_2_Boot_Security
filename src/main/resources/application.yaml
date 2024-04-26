@@ -20,6 +20,3 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-  view:
-    prefix: /WEB-INF/jsp/
-    suffix: .jsp

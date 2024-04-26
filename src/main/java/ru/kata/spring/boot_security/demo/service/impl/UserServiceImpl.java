@@ -2,6 +2,9 @@ package ru.kata.spring.boot_security.demo.service.impl;
 
 
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
@@ -14,7 +17,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
@@ -84,6 +87,15 @@ public class UserServiceImpl implements UserService {
         }
 
         userDAO.update(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDAO.findUserByName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
     }
 
 
